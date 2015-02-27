@@ -2,9 +2,7 @@ package main
 
 import (
 	"flag"
-	"os"
 	"runtime"
-	"runtime/pprof"
 	"sync"
 	"time"
 
@@ -57,33 +55,35 @@ func (s *Server) Run(fps int, dur int) {
 }
 
 type Server struct {
-	clients []*ClientConn
+	clients map[int64]*ClientConn
 	mutex   sync.Mutex
 	stat    *actionstat.ActionStat
 }
 
 func NewServer() *Server {
 	return &Server{
-		clients: make([]*ClientConn, 0),
+		clients: make(map[int64]*ClientConn, 0),
 		stat:    actionstat.NewActionStat(),
 	}
 }
 func (s *Server) AddClient(c *ClientConn) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	s.clients = append(s.clients, c)
+	if s.clients[c.id] != nil {
+		log.Error("client exist %v", c)
+		return
+	}
+	s.clients[c.id] = c
 }
 
 func (s *Server) DelClient(c *ClientConn) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	for i, v := range s.clients {
-		if c.id == v.id {
-			s.clients = append(s.clients[:i], s.clients[i+1:]...)
-			return
-		}
+	if s.clients[c.id] == nil {
+		log.Error("client not exist %v", c)
+		return
 	}
-	log.Error("client not found", c)
+	delete(s.clients, c.id)
 }
 
 func (s *Server) recvClient() {
