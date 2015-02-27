@@ -112,9 +112,9 @@ func (app *App) AddControl(c sdlgui.ControlI) {
 
 // change as app's need
 
-func (g *App) addControls() {
-	g.cl = analogueclock.New(0, 0, 0, 512, 512)
-	g.AddControl(g.cl)
+func (app *App) addControls() {
+	app.cl = analogueclock.New(0, 0, 0, 512, 512)
+	app.AddControl(app.cl)
 }
 
 func (app *App) Run() {
