@@ -27,3 +27,6 @@ server
 	"github.com/kasworld/netlib/gogueconn"
 	"github.com/kasworld/netlib/gogueserver"
 	"github.com/kasworld/runstep"
+
+korean discription
+http://kasw.blogspot.kr/2015/02/go-tcp-server-gui-client.html
