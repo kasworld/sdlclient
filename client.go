@@ -18,8 +18,10 @@ import (
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
+
 	var connectTo = flag.String("connectTo", "localhost:6666", "server ip/port")
 	flag.Parse()
+
 	app := NewApp(*connectTo)
 	if app == nil {
 		return

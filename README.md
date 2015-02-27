@@ -1,5 +1,6 @@
 # sdlclient
-sdlgui tcpclient example for golang
+
+TCP server and sdlgui client example for golang
 
 client clock goes by server time
 

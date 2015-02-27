@@ -16,14 +16,6 @@ import (
 	"github.com/kasworld/runstep"
 )
 
-type PacketToServer struct {
-	Cmd int
-}
-
-type PacketToClient struct {
-	Arg time.Time
-}
-
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
@@ -31,22 +23,19 @@ func main() {
 	var connCount = flag.Int("count", 1000, "connection count")
 	var connThrottle = flag.Int("throttle", 10, "connection throttle")
 	var rundur = flag.Int("rundur", 3600, "run sec")
-	var profilefilename = flag.String("pfilename", "", "profile filename")
 	flag.Parse()
-
-	if *profilefilename != "" {
-		f, err := os.Create(*profilefilename)
-		if err != nil {
-			log.Fatalf("profile %v", err)
-		}
-		pprof.StartCPUProfile(f)
-		defer pprof.StopCPUProfile()
-	}
 
 	server := NewServer()
 	go gogueserver.TCPServer(*listenFrom, *connCount, *connThrottle, server.NewClientConn)
-
 	server.Run(30, *rundur)
+}
+
+type PacketToServer struct {
+	Cmd int
+}
+
+type PacketToClient struct {
+	Arg time.Time
 }
 
 func (s *Server) Run(fps int, dur int) {
@@ -65,7 +54,6 @@ func (s *Server) Run(fps int, dur int) {
 			break
 		}
 	}
-
 }
 
 type Server struct {
