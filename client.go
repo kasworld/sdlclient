@@ -5,9 +5,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/veandco/go-sdl2/sdl"
-
 	"github.com/kasworld/actionstat"
+	"github.com/kasworld/go-sdl2/sdl"
 	"github.com/kasworld/go-sdlgui"
 	"github.com/kasworld/go-sdlgui/analogueclock"
 	"github.com/kasworld/log"
@@ -119,7 +118,7 @@ func (app *App) addControls() {
 
 func (app *App) Run() {
 	go app.gconn.Run(app.gconn.Step)
-	defer app.gconn.Quit()
+	defer app.gconn.Stop()
 
 	// need to co-exist sdl lib
 	runtime.LockOSThread()

@@ -9,7 +9,7 @@ client clock goes by server time
 
 client 
 
-	"github.com/veandco/go-sdl2/sdl"
+	"github.com/kasworld/go-sdl2/sdl"
 
 	"github.com/kasworld/actionstat"
 	"github.com/kasworld/go-sdlgui"
