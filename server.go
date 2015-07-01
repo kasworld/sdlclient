@@ -65,15 +65,15 @@ func (s *Server) Run(fps int, dur int) {
 }
 
 type Server struct {
-	clients map[int64]*ClientConn
+	clients map[idgen.IDInt]*ClientConn
 	mutex   sync.Mutex
 	stat    *actionstat.ActionStat
 }
 
 func NewServer() *Server {
 	return &Server{
-		clients: make(map[int64]*ClientConn, 0),
-		stat:    actionstat.NewActionStat(),
+		clients: make(map[idgen.IDInt]*ClientConn, 0),
+		stat:    actionstat.New(),
 	}
 }
 func (s *Server) AddClient(c *ClientConn) {
@@ -122,7 +122,7 @@ func (s *Server) NewClientConn(gconn *gogueconn.GogueConn, clientQueue <-chan bo
 
 type ClientConn struct {
 	*runstep.RunStep
-	id    int64
+	id    idgen.IDInt
 	gconn *gogueconn.GogueConn
 }
 

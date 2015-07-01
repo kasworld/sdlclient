@@ -103,7 +103,7 @@ func NewApp(connectTo string) *App {
 		Keys:  make(map[sdl.Scancode]bool),
 		Win:   sdlgui.NewWindow("SDL GUI Clock Example", 512, 512, true),
 
-		Stat:  actionstat.NewActionStat(),
+		Stat:  actionstat.New(),
 		gconn: NewServerConn(connectTo),
 	}
 	if app.gconn == nil {
